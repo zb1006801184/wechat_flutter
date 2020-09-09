@@ -9,7 +9,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBarConfig().configAppBar('联系人', context),
+      appBar: NavBarConfig().configAppBar('微信', context),
       body: Center(
         child: Text("data"),
       ),
