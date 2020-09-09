@@ -1,45 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:wechat_flutter/state/them_model.dart';
 import '../state/provider_store.dart';
+
 class ThemUntil {
-    static const String THEMSTATE = 'them_state';//主题模式
+  static const String THEMSTATE = 'them_state'; //主题模式
+  static const Color mainColor = Color.fromRGBO(248, 248, 248, 1);
 
-    ThemeData linghtData = ThemeData(
+  //正常模式
+  ThemeData linghtData = ThemeData(
+    textTheme: TextTheme(bodyText2: TextStyle(color: Color(0xFF181818))),
+    scaffoldBackgroundColor: Color(0xFFEDEDED),
+    primaryColor: mainColor,
+  );
+  //深色模式
+  final ThemeData darktData = ThemeData(
+      scaffoldBackgroundColor: Color(0xFF121212),
+      primaryColor: Color(0xFF181818),
+      textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)));
 
-    );  //日间模式
-   final ThemeData darktData = ThemeData(
-      scaffoldBackgroundColor:Color(0xFF121212),
-      textTheme: TextTheme(body1: TextStyle(color: Colors.white))
-    );  //夜间模式
-
-//主题背景颜色
-  Color mainColor(BuildContext context) {
-    return Store.value<ThemModel>(context).getThemeModel()?Color(0xFF121212):Color(0xFFF4F5F7);
-  }
-  //部分widget颜色
-  Color widgetColor(BuildContext context) {
-    return Store.value<ThemModel>(context).getThemeModel()?Color(0xFFF4F5F7):Color(0xFF121212);
-  }
-  //部分图标颜色
-  Color iconColor(BuildContext context) {
-    return Store.value<ThemModel>(context).getThemeModel()?Colors.grey:null;
+  //tabbar 和 导航栏的颜色
+  Color tabbarColor(BuildContext context) {
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFF181818)
+        : mainColor;
   }
 
   //状态栏
   Brightness stateBarColor(BuildContext context) {
-        return Store.value<ThemModel>(context).getThemeModel()?Brightness.dark:Brightness.light;
-  }
-  //加载web蒙版背景颜色
-  Color webBGColor(BuildContext context){
-    return Store.value<ThemModel>(context).getThemeModel()?Color(0xFF121212):Colors.transparent;
-  }
-  //评论底部颜色
-  Color commentBottomColor(BuildContext context) {
-    return Store.value<ThemModel>(context).getThemeModel()?Color(0xFF181818):Color(0xFFF4F5F7);
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Brightness.dark
+        : Brightness.light;
   }
 
-  //白色/黑色
-Color settingColor(BuildContext context) {
-    return Store.value<ThemModel>(context).getThemeModel()?Color(0xFF181818):Colors.white;
-  }
+  //主要文本颜色
+
 }

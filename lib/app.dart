@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       themeMode: Store.value<ThemModel>(context).getThemeModel()?ThemeMode.dark : ThemeMode
                     .light,
       darkTheme: ThemUntil().darktData,
+      theme: ThemUntil().linghtData,
     );
   }
 }
