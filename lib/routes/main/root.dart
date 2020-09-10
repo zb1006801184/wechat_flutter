@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wechat_flutter/unitls/nav_bar_config.dart';
+import '../contact/contact.dart';
+import '../discover/discover.dart';
+import '../mine/mine.dart';
+import '../wechat/wechat.dart';
 
 class Root extends StatefulWidget {
   @override
@@ -8,7 +12,7 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _selectedIndex = 0;
-
+  List titles = ['微信', '通讯录', '发现', '我'];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -16,15 +20,20 @@ class _RootState extends State<Root> {
   }
 
   Widget itemViewC(int index) {
-    return Center(
-      child: Text('${index}'),
-    );
+    List barItemPages = [Wechat(), Contact(), Discover(), Mine()];
+    return barItemPages[_selectedIndex];
+  }
+
+  _rightClick(){
+    print(titles[_selectedIndex]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: NavBarConfig().tabbarAppBar('微信', context),
+        appBar: _selectedIndex == 3
+            ? null
+            : NavBarConfig().tabbarAppBar(titles[_selectedIndex], context,rightAction: _rightClick),
         bottomNavigationBar: BottomNavigationBar(
           // 底部导航
           items: <BottomNavigationBarItem>[

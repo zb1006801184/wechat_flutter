@@ -34,4 +34,31 @@ class ThemUntil {
 
   //主要文本颜色
 
+  //分割线颜色
+  Color lines(BuildContext context) {
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFFE5E5E5)
+        : Color(0xFFE5E5E5);
+  }
+  //间隔线颜色
+  Color spaceLinesColor(BuildContext context){
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFFEDEDED)
+        : Color(0xFFEDEDED);
+  }
+
+  //cell的背景色
+  Color cellBgColor(BuildContext context){
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Colors.white
+        : Colors.white;
+  }
+
+  //正常模式下灰色字体
+
+  Color fontColor(BuildContext context){
+     return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFF808080)
+        : Color(0xFF808080);
+  }
 }
