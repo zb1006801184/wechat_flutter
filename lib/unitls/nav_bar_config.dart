@@ -22,7 +22,7 @@ class NavBarConfig {
           onPressed: () {
             Navigator.pop(context);
           }),
-      backgroundColor: ThemUntil().tabbarColor(context),
+      backgroundColor: ThemUntil().navColor(context),
       elevation: 0, //阴影辐射范围
       brightness: ThemUntil().stateBarColor(context),
     );
@@ -38,7 +38,7 @@ class NavBarConfig {
       ),
       leading: Text(''),
       actions: [wechatRightButton(title, rightAction: rightAction)],
-      backgroundColor: ThemUntil().tabbarColor(context),
+      backgroundColor: ThemUntil().navColor(context),
       elevation: 0, //阴影辐射范围
       brightness: ThemUntil().stateBarColor(context),
     );

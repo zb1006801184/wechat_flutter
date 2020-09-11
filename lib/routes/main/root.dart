@@ -24,7 +24,7 @@ class _RootState extends State<Root> {
     return barItemPages[_selectedIndex];
   }
 
-  _rightClick(){
+  _rightClick() {
     print(titles[_selectedIndex]);
   }
 
@@ -33,7 +33,8 @@ class _RootState extends State<Root> {
     return Scaffold(
         appBar: _selectedIndex == 3
             ? null
-            : NavBarConfig().tabbarAppBar(titles[_selectedIndex], context,rightAction: _rightClick),
+            : NavBarConfig().tabbarAppBar(titles[_selectedIndex], context,
+                rightAction: _rightClick),
         bottomNavigationBar: BottomNavigationBar(
           // 底部导航
           items: <BottomNavigationBarItem>[

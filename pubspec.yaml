@@ -46,6 +46,9 @@ dependencies:
   
   # 加载svg图片
   flutter_svg: ^0.18.1
+
+  # 图片加载
+  cached_network_image: ^2.3.1
   
 dev_dependencies:
   flutter_test:
@@ -82,7 +85,7 @@ flutter:
     - images/loading/
     - images/input/
     - images/moments/
-
+    - mock/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

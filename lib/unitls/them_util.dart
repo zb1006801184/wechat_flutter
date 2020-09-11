@@ -18,11 +18,17 @@ class ThemUntil {
       primaryColor: Color(0xFF181818),
       textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)));
 
-  //tabbar 和 导航栏的颜色
+  //tabbar 
   Color tabbarColor(BuildContext context) {
     return Store.value<ThemModel>(context).getThemeModel()
         ? Color(0xFF181818)
         : mainColor;
+  }
+  //导航栏的颜色
+  Color navColor(BuildContext context){
+    return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFF181818)
+        : Color(0xFFEDEDED);
   }
 
   //状态栏
