@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../widgets/wechat_search_widget.dart';
-import '../../model/MessageModel.dart';
+import '../../model/message_model.dart';
 import '../../widgets/wechat_item_widget.dart';
 class Wechat extends StatefulWidget {
   @override

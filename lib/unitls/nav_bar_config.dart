@@ -46,12 +46,14 @@ class NavBarConfig {
 
   //wechat right button
   Widget wechatRightButton(String title, {Function rightAction}) {
-    if (title.contains('微信')) {
+    String iconString = title.contains('微信')
+        ? 'images/mainframe/icons_outlined_add2.svg'
+        : 'images/contacts/icons_outlined_addfriends.svg';
+    if (title.contains('微信') || title.contains('通讯录')) {
       return Container(
         padding: EdgeInsets.only(right: 10),
         child: IconButton(
-            icon: SvgPicture.asset('images/mainframe/icons_outlined_add2.svg'),
-            onPressed: rightAction),
+            icon: SvgPicture.asset(iconString), onPressed: rightAction),
       );
     }
     return Container();

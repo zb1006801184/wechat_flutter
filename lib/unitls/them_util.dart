@@ -64,7 +64,16 @@ class ThemUntil {
 
   Color fontColor(BuildContext context){
      return Store.value<ThemModel>(context).getThemeModel()
-        ? Color(0xFF808080)
-        : Color(0xFF808080);
+        ? Color(0xFFB2B2B2)
+        : Color(0xFFB2B2B2);
   }
+
+//首页子标题颜色
+Color subtitleColor(BuildContext context){
+return Store.value<ThemModel>(context).getThemeModel()
+        ? Color(0xFF9b9b9b)
+        : Color(0xFF9b9b9b);
+}
+
+
 }
