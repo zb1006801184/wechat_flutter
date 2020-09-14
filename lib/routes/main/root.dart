@@ -21,11 +21,13 @@ class _RootState extends State<Root> {
 
   Widget itemViewC(int index) {
     List barItemPages = [Wechat(), Contact(), Discover(), Mine()];
-    return barItemPages[_selectedIndex];
+    return barItemPages[index];
   }
 
   _rightClick() {
-    print(titles[_selectedIndex]);
+    if (_selectedIndex == 0) {
+      
+    }
   }
 
   @override
@@ -103,7 +105,6 @@ class _RootState extends State<Root> {
             itemViewC(1),
             itemViewC(2),
             itemViewC(3),
-            itemViewC(4),
           ],
         ));
   }

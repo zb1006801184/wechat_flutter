@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:wechat_flutter/model/contact_Info.dart';
+import 'package:wechat_flutter/unitls/global.dart';
+import 'package:wechat_flutter/unitls/them_util.dart';
 import 'package:wechat_flutter/widgets/wechat_search_widget.dart';
 import 'package:azlistview/azlistview.dart';
 
@@ -23,8 +25,6 @@ class _ContactState extends State<Contact> {
     topList.add(ContactInfo(
       screenName: '搜索',
       tagIndex: '↑',
-      // bgColor: Colors.orange,
-      // iconData: Icons.person_add
     ));
     topList.add(ContactInfo(
         screenName: '新的朋友',
@@ -51,7 +51,7 @@ class _ContactState extends State<Contact> {
 
   void loadData() async {
     //加载联系人列表
-    rootBundle.loadString('mock/contacts1.json').then((value) {
+    rootBundle.loadString('mock/contacts.json').then((value) {
       List list = json.decode(value);
       list.forEach((v) {
         contactList.add(ContactInfo.fromJson(v));
@@ -139,7 +139,7 @@ class _ContactState extends State<Contact> {
   static Widget getWeChatListItem(
     BuildContext context,
     ContactInfo model, {
-    double susHeight = 40,
+    double susHeight = 33,
     Color defHeaderBgColor,
   }) {
     return Column(
@@ -151,6 +151,7 @@ class _ContactState extends State<Contact> {
               susHeight: susHeight),
         ),
         getWeChatItem(context, model, defHeaderBgColor: defHeaderBgColor),
+        lineWidget(context),
       ],
     );
   }
@@ -161,46 +162,49 @@ class _ContactState extends State<Contact> {
     Color defHeaderBgColor,
   }) {
     DecorationImage image;
-    return ListTile(
-      leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-        child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(4.0),
-          color: model.bgColor ?? defHeaderBgColor,
-          image: image,
+    return Container(
+      color: ThemUntil().cellBgColor(context),
+      child: ListTile(
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(4.0),
+              color: model.bgColor ?? defHeaderBgColor,
+              image: image,
+            ),
+            child: model.iconData == null
+                ? CachedNetworkImage(
+                    imageUrl: model?.profileImageUrl,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  )
+                : Icon(
+                    model.iconData,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+          ),
         ),
-        child: model.iconData == null
-            ? CachedNetworkImage(
-                imageUrl: model?.profileImageUrl,
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              )
-            : Icon(
-                model.iconData,
-                color: Colors.white,
-                size: 20,
-              ),
+        title: Text(model.screenName),
+        onTap: () {
+          //LogUtil.e("onItemClick : $model");
+          // Utils.showSnackBar(context, 'onItemClick : ${model.name}');
+        },
       ),
-      ),
-      title: Text(model.screenName),
-      onTap: () {
-        //LogUtil.e("onItemClick : $model");
-        // Utils.showSnackBar(context, 'onItemClick : ${model.name}');
-      },
     );
   }
 
   //头部视图
   static Widget getSusItem(BuildContext context, String tag,
-      {double susHeight = 40}) {
+      {double susHeight = 33}) {
     return Container(
       height: susHeight,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 16.0),
-      color: Color(0xFFF3F4F5),
+      color: Color(0xFFEDEDED),
       alignment: Alignment.centerLeft,
       child: Text(
         '$tag',
@@ -210,6 +214,18 @@ class _ContactState extends State<Contact> {
           color: Color(0xFF666666),
         ),
       ),
+    );
+  }
+
+static  Widget lineWidget(BuildContext context) {
+    return Container(
+      color: ThemUntil().cellBgColor(context),
+      child: Container(
+      height: 0.5,
+      width: Global.ksWidth,
+      margin: EdgeInsets.only(left: 56),
+      color: ThemUntil().lines(context),
+    ),
     );
   }
 }
