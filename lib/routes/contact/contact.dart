@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -20,28 +21,28 @@ class _ContactState extends State<Contact> {
     // TODO: implement initState
     super.initState();
     topList.add(ContactInfo(
-      name: '搜索',
+      screenName: '搜索',
       tagIndex: '↑',
       // bgColor: Colors.orange,
       // iconData: Icons.person_add
     ));
     topList.add(ContactInfo(
-        name: '新的朋友',
+        screenName: '新的朋友',
         tagIndex: '↑',
         bgColor: Colors.orange,
         iconData: Icons.person_add));
     topList.add(ContactInfo(
-        name: '群聊',
+        screenName: '群聊',
         tagIndex: '↑',
         bgColor: Colors.green,
         iconData: Icons.people));
     topList.add(ContactInfo(
-        name: '标签',
+        screenName: '标签',
         tagIndex: '↑',
         bgColor: Colors.blue,
         iconData: Icons.local_offer));
     topList.add(ContactInfo(
-        name: '公众号',
+        screenName: '公众号',
         tagIndex: '↑',
         bgColor: Colors.blueAccent,
         iconData: Icons.person));
@@ -50,7 +51,7 @@ class _ContactState extends State<Contact> {
 
   void loadData() async {
     //加载联系人列表
-    rootBundle.loadString('mock/car_models.json').then((value) {
+    rootBundle.loadString('mock/contacts1.json').then((value) {
       List list = json.decode(value);
       list.forEach((v) {
         contactList.add(ContactInfo.fromJson(v));
@@ -64,7 +65,7 @@ class _ContactState extends State<Contact> {
   void _handleList(List<ContactInfo> list) {
     if (list == null || list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
-      String pinyin = PinyinHelper.getPinyinE(list[i].name);
+      String pinyin = PinyinHelper.getPinyinE(list[i].screenName);
       String tag = pinyin.substring(0, 1).toUpperCase();
       list[i].namePinyin = pinyin;
       if (RegExp("[A-Z]").hasMatch(tag)) {
@@ -94,7 +95,7 @@ class _ContactState extends State<Contact> {
       itemCount: contactList.length,
       itemBuilder: (BuildContext context, int index) {
         ContactInfo model = contactList[index];
-        if (model.name == '搜索') {
+        if (model.screenName == '搜索') {
           return WechatSearchWidget();
         }
         return getWeChatListItem(
@@ -105,8 +106,8 @@ class _ContactState extends State<Contact> {
       },
       physics: BouncingScrollPhysics(),
       susItemBuilder: (BuildContext context, int index) {
+        //返回悬浮的视图
         ContactInfo model = contactList[index];
-        print(model.name);
         if ('↑' == model.getSuspensionTag()) {
           return Container();
         }
@@ -161,7 +162,9 @@ class _ContactState extends State<Contact> {
   }) {
     DecorationImage image;
     return ListTile(
-      leading: Container(
+      leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+        child: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
@@ -171,14 +174,18 @@ class _ContactState extends State<Contact> {
           image: image,
         ),
         child: model.iconData == null
-            ? null
+            ? CachedNetworkImage(
+                imageUrl: model?.profileImageUrl,
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              )
             : Icon(
                 model.iconData,
                 color: Colors.white,
                 size: 20,
               ),
       ),
-      title: Text(model.name),
+      ),
+      title: Text(model.screenName),
       onTap: () {
         //LogUtil.e("onItemClick : $model");
         // Utils.showSnackBar(context, 'onItemClick : ${model.name}');
